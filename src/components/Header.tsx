@@ -11,8 +11,8 @@ const Header: React.FC<HeaderProps> = ({ links }) => {
     <AppBar
       position="static"
       sx={{
-        backgroundColor: '#ffffff', // Light background
-        color: '#213547', // Dark text
+        backgroundColor: ' #4682B4', // Light background
+        color: '#000', // Dark text
         boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)', // Subtle shadow
       }}
     >
@@ -22,7 +22,7 @@ const Header: React.FC<HeaderProps> = ({ links }) => {
           sx={{
             flexGrow: 1,
             fontWeight: 'bold',
-            color: '#213547', // Dark color for title
+            color: '#000', // Dark color for title
             textDecoration: 'none',
           }}
         >
