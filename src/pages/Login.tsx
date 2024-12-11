@@ -39,7 +39,7 @@ const Login: React.FC = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <Button type="submit" href="/" variant="contained">Login</Button>
+        <Button type="submit" variant="contained">Login</Button>
       </form>
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
