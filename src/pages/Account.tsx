@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../auth/supabaseClient';
 
 interface UserProfile {
-  name: string | null;
+  first_name: string | null;
+  last_name: string | null;
   avatar_url: string | null;
   email: string;
 }
@@ -31,14 +32,15 @@ const AccountPage: React.FC = () => {
 
       const { data: profileData, error } = await supabase
         .from('profiles')
-        .select('name, avatar_url')
+        .select('first_name, last_name, avatar_url')
         .eq('id', user.id)
         .single();
 
       if (error) throw error;
 
       setProfile({
-        name: profileData.name,
+        first_name: profileData.first_name,
+        last_name: profileData.last_name,
         avatar_url: profileData.avatar_url,
         email: user.email || '',
       });
@@ -132,7 +134,8 @@ const AccountPage: React.FC = () => {
             width="150"
             height="150"
           />
-          <p>Name: {profile.name || 'Not set'}</p>
+          <p>First Name: {profile.first_name || 'Not set'}</p>
+          <p>Last Name: {profile.last_name || 'Not set'}</p>
           <p>Email: {profile.email}</p>
           <div>
             <h3>Change Profile Picture</h3>

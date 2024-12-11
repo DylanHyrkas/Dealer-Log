@@ -11,9 +11,9 @@ const Header: React.FC<HeaderProps> = ({ links }) => {
     <AppBar
       position="static"
       sx={{
-        backgroundColor: ' #4682B4', // Light background
-        color: '#000', // Dark text
-        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)', // Subtle shadow
+        backgroundColor: ' #ffffff',
+        color: '#000',
+        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
       }}
     >
       <Toolbar>

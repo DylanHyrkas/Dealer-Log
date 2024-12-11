@@ -7,6 +7,7 @@ import Login from './pages/Login.tsx';
 import ProtectedRoute from './auth/ProtectedRoute.tsx';
 import { useAuth } from './auth/AuthProvider.tsx';
 import Account from './pages/Account.tsx';
+import Signup from './pages/SignUp.tsx';
 
 function App() {
   const { user, signOut } = useAuth();
@@ -27,7 +28,7 @@ function App() {
         { label: 'Inventory', path: '/inventorymanagement' },
         { label: 'Logout', path: '/login', onClick: handleLogout },
       ]
-  : []
+  : [{ label: 'Sign Up', path:'signup'}]
 
   return (
     <>
@@ -35,6 +36,7 @@ function App() {
         <Header links={navLinks} />
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup/>} />
           <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path="/inventorymanagement" element={<ProtectedRoute><InventoryManagement /></ProtectedRoute>} />
           <Route path="/account" element={<ProtectedRoute><Account/></ProtectedRoute>} />
