@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 80,
+    port: 8080,
     strictPort: true, // Ensures it fails if port 80 is unavailable
     host: true, // Listen on all available IPs
   },

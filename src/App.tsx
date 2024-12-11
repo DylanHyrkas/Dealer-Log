@@ -1,25 +1,47 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home';
 import Header from './components/Header';
 import InventoryManagement from './pages/InventoryManagement.tsx';
+import Login from './pages/Login.tsx';
+import ProtectedRoute from './auth/ProtectedRoute.tsx';
+import { useAuth } from './auth/AuthProvider.tsx';
+import Account from './pages/Account.tsx';
 
 function App() {
-  // Navigation links for the header
-  const navLinks = [
-    { label: 'Home', path: '/' },
-  ];
+  const { user, signOut } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      // Redirect to login after successful logout
+      window.location.href = '/login';
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
+  };
+
+  const navLinks = user
+  ?[
+        { label: 'Home', path: '/' },
+        { label: 'Inventory', path: '/inventorymanagement' },
+        { label: 'Logout', path: '/login', onClick: handleLogout },
+      ]
+  : []
 
   return (
-    <BrowserRouter>
-      {/* Header with navigation links */}
-      <Header links={navLinks} />
-      {/* Define application routes */}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/inventorymanagement" element={<InventoryManagement />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Header links={navLinks} />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route path="/inventorymanagement" element={<ProtectedRoute><InventoryManagement /></ProtectedRoute>} />
+          <Route path="/account" element={<ProtectedRoute><Account/></ProtectedRoute>} />
+          <Route path="*" element={<div>404 - Page Not Found</div>} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
