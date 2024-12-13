@@ -22,16 +22,16 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false); // Track loading state
-  const [failedAttempts, setFailedAttempts] = useState(0); // Track failed login attempts
-  const [showResetDialog, setShowResetDialog] = useState(false); // Show password reset dialog
-  const [snackbarOpen, setSnackbarOpen] = useState(false); // Snackbar state
+  const [loading, setLoading] = useState(false);
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const [showResetDialog, setShowResetDialog] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success'); // Snackbar severity
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true); // Start loading
+    setLoading(true);
     try {
       await signIn(email, password);
       navigate('/'); // Redirect to home page
@@ -41,20 +41,19 @@ const Login: React.FC = () => {
       } else {
         setError('An unexpected error occurred.');
       }
-      setFailedAttempts((prev) => prev + 1); // Increment failed attempts
+      setFailedAttempts((prev) => prev + 1);
 
-      // Show reset password dialog after 3 failed attempts
       if (failedAttempts + 1 >= 3) {
         setShowResetDialog(true);
       }
     } finally {
-      setLoading(false); // End loading
+      setLoading(false);
     }
   };
 
   const handleResetPassword = async () => {
     try {
-      await resetPassword(email); // Call resetPassword from AuthProvider
+      await resetPassword(email);
       setSnackbarMessage('Password reset email sent! Please check your inbox.');
       setSnackbarSeverity('success');
       setSnackbarOpen(true);
@@ -76,11 +75,28 @@ const Login: React.FC = () => {
   };
 
   return (
-    <Box sx={{ maxWidth: 400, mx: 'auto', mt: 8 }}>
-      <Typography variant="h4" gutterBottom>
+    <Box
+      sx={{
+        maxWidth: 400,
+        mx: 'auto',
+        mt: 4,
+        p: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        boxShadow: { xs: 'none', sm: 3 },
+        borderRadius: { sm: 2 },
+        backgroundColor: { xs: 'transparent', sm: 'white' },
+      }}
+    >
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{ fontSize: { xs: '1.8rem', sm: '2rem' }, textAlign: 'center' }}
+      >
         Login
       </Typography>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={{ width: '100%' }}>
         <TextField
           label="Email"
           id="email-field"
@@ -102,13 +118,21 @@ const Login: React.FC = () => {
           required
           aria-label="Enter your password"
         />
-        {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
+        {error && (
+          <Alert severity="error" sx={{ mt: 2, fontSize: '0.875rem' }}>
+            {error}
+          </Alert>
+        )}
         <Button
           type="submit"
           variant="contained"
           color="primary"
           fullWidth
-          sx={{ mt: 3 }}
+          sx={{
+            mt: 3,
+            py: 1.5,
+            fontSize: '1rem',
+          }}
           disabled={loading}
         >
           {loading ? <CircularProgress size={24} /> : 'Login'}
@@ -116,11 +140,17 @@ const Login: React.FC = () => {
       </form>
 
       {/* Reset Password Dialog */}
-      <Dialog open={showResetDialog} onClose={() => setShowResetDialog(false)}>
+      <Dialog
+        open={showResetDialog}
+        onClose={() => setShowResetDialog(false)}
+        fullWidth
+        maxWidth="xs"
+      >
         <DialogTitle>Reset Your Password</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            It seems you've entered your password incorrectly multiple times. Would you like to reset your password?
+            It seems you've entered your password incorrectly multiple times. Would you like to
+            reset your password?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

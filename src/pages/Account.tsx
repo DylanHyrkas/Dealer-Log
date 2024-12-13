@@ -10,7 +10,7 @@ import {
   Alert,
   Avatar,
 } from '@mui/material';
-
+import EditIcon from '@mui/icons-material/Edit';
 const Account: React.FC = () => {
   const { user } = useAuth(); // Get the current user from AuthProvider
   const [loading, setLoading] = useState(true);
@@ -147,12 +147,10 @@ const Account: React.FC = () => {
             <strong>Role:</strong> {role}
           </Typography>
           <Button
-            variant="contained"
-            color="primary"
             sx={{ mt: 3 }}
-            onClick={() => setEditMode(true)} // Enter edit mode
+            onClick={() => setEditMode(true)}
           >
-            Edit Profile
+            <EditIcon fontSize='large' sx={{color:'black'}}/>
           </Button>
         </>
       )}

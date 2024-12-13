@@ -1,10 +1,19 @@
+import React from 'react';
+import {
+  Box,
+  Typography,
+} from '@mui/material';
 
-const InventoryManagement = () => {
+
+const InventoryManagement: React.FC = () => {
+
+
   return (
-    <div>
-      <h1>Inventory Management</h1>
-      <p>Manage your inventory digitally with ease!</p>
-    </div>
+    <Box sx={{ maxWidth: 1200, mx: 'auto', mt: 5 }}>
+      <Typography variant="h4" gutterBottom>
+        Inventory Management
+      </Typography>
+    </Box>
   );
 };
 
