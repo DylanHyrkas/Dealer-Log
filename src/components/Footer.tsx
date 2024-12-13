@@ -14,8 +14,6 @@ const Footer: React.FC = () => {
         py: 2,
         backgroundColor: "transparent", // Neutral background
         borderTop: "1px solid #ddd", // Subtle border for separation
-        position: "fixed", // Fixed position at the bottom
-        bottom: 0, // Align to the bottom of the viewport
         width: "100%", // Full-width footer
       }}
     >

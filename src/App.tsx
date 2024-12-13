@@ -6,7 +6,6 @@ import Login from './pages/Login.tsx';
 import ProtectedRoute from './auth/ProtectedRoute.tsx';
 import { useAuth } from './auth/AuthProvider.tsx';
 import Account from './pages/Account.tsx';
-import Footer from './components/Footer.tsx';
 import PrivacyPolicy from './pages/PricacyPolicy.tsx';
 import TermsOfService from './pages/TermsOfService.tsx';
 

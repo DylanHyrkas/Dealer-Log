@@ -83,21 +83,23 @@ const Header: React.FC<HeaderProps> = ({ links }) => {
               placeholder="Search..."
               value={searchQuery}
               onChange={handleSearchChange}
+              type="search"
               sx={{
                 width: '100%',
                 maxWidth: 400,
-                backgroundColor: '#ffffff',
+                backgroundColor: '#91d9ac',
                 borderRadius: 1,
               }}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
+              slotProps={{
+                input: {
+                  startAdornment:
+                  <InputAdornment position="start">
                     <SearchIcon
                       sx={{ cursor: 'pointer', color: '#213547' }}
                       onClick={handleSearchSubmit}
                     />
                   </InputAdornment>
-                ),
+                },
               }}
             />
           </Box>

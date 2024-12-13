@@ -14,7 +14,11 @@ import {
   DialogTitle,
   Snackbar,
   CircularProgress,
+  InputAdornment,
+  IconButton,
 } from '@mui/material';
+import { VisibilityOff } from '@mui/icons-material';
+import Visibility from '@mui/icons-material/Visibility';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -28,6 +32,17 @@ const Login: React.FC = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success');
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+
+  const handleMouseUpPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,7 +94,7 @@ const Login: React.FC = () => {
       sx={{
         maxWidth: 400,
         mx: 'auto',
-        mt: 4,
+        mt: '25vh',
         p: 2,
         display: 'flex',
         flexDirection: 'column',
@@ -109,15 +124,31 @@ const Login: React.FC = () => {
           aria-label="Enter your email address"
         />
         <TextField
-          label="Password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          fullWidth
-          margin="normal"
-          required
-          aria-label="Enter your password"
-        />
+  label="Password"
+  type={showPassword ? 'text' : 'password'}
+  value={password}
+  onChange={(e) => setPassword(e.target.value)}
+  fullWidth
+  margin="normal"
+  required
+  aria-label="Enter your password"
+  InputProps={{
+    endAdornment: (
+      <InputAdornment position="end">
+        <IconButton
+          aria-label={showPassword ? 'hide the password' : 'display the password'}
+          onClick={handleClickShowPassword}
+          onMouseDown={handleMouseDownPassword}
+          onMouseUp={handleMouseUpPassword}
+          edge="end"
+          sx={{mr: 0,}}
+        >
+          {showPassword ? <VisibilityOff /> : <Visibility />}
+        </IconButton>
+      </InputAdornment>
+    ),
+  }}
+/>
         {error && (
           <Alert severity="error" sx={{ mt: 2, fontSize: '0.875rem' }}>
             {error}
