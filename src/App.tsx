@@ -44,7 +44,6 @@ function App() {
           <Route path="/account" element={<ProtectedRoute><Account/></ProtectedRoute>} />
           <Route path="*" element={<div>404 - Page Not Found</div>} />
         </Routes>
-        <Footer/>
       </BrowserRouter>
     </>
   );
