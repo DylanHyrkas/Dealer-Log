@@ -1,12 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from './supabaseClient';
 import { User } from '@supabase/supabase-js';
+import { Box, CircularProgress } from '@mui/material';
 
 interface AuthContextProps {
   user: User | null;
   signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string, first_name: string, last_name: string) => Promise<void>;
   signOut: () => Promise<void>;
+  resetPassword: (email: string) => Promise<void>;
   error?: string | null;
 }
 
@@ -46,17 +47,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setAuthError(null);
   };
 
-  const signUp = async (email: string, password: string, first_name: string, last_name: string) => {
-    if (password.length < 8 || !/\d/.test(password) || !/[A-Z]/.test(password)) {
-      throw new Error('Password must be at least 8 characters long, contain a number, and an uppercase letter.');
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      setAuthError(error.message);
+      throw new Error(error.message);
     }
+    setAuthError(null);
+  };
 
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { first_name, last_name },
-      },
+  const resetPassword = async (email: string) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: 'http://localhost:8080/reset-password', // Update this URL to your password reset page
     });
 
     if (error) {
@@ -67,21 +69,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setAuthError(null);
   };
 
-  const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      setAuthError(error.message);
-      throw new Error(error.message);
-    }
-    setAuthError(null);
-  };
-
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
-    <AuthContext.Provider value={{ user, signIn, signUp, signOut, error: authError }}>
+    <AuthContext.Provider value={{ user, signIn, signOut, resetPassword, error: authError }}>
       {children}
     </AuthContext.Provider>
   );
