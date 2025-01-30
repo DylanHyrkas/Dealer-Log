@@ -31,16 +31,22 @@ const Login: React.FC = () => {
   const [showResetDialog, setShowResetDialog] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>(
+    'success'
+  );
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     event.preventDefault();
   };
 
-  const handleMouseUpPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseUpPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     event.preventDefault();
   };
 
@@ -124,31 +130,33 @@ const Login: React.FC = () => {
           aria-label="Enter your email address"
         />
         <TextField
-  label="Password"
-  type={showPassword ? 'text' : 'password'}
-  value={password}
-  onChange={(e) => setPassword(e.target.value)}
-  fullWidth
-  margin="normal"
-  required
-  aria-label="Enter your password"
-  InputProps={{
-    endAdornment: (
-      <InputAdornment position="end">
-        <IconButton
-          aria-label={showPassword ? 'hide the password' : 'display the password'}
-          onClick={handleClickShowPassword}
-          onMouseDown={handleMouseDownPassword}
-          onMouseUp={handleMouseUpPassword}
-          edge="end"
-          sx={{mr: 0,}}
-        >
-          {showPassword ? <VisibilityOff /> : <Visibility />}
-        </IconButton>
-      </InputAdornment>
-    ),
-  }}
-/>
+          label="Password"
+          type={showPassword ? 'text' : 'password'}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          fullWidth
+          margin="normal"
+          required
+          aria-label="Enter your password"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label={
+                    showPassword ? 'hide the password' : 'display the password'
+                  }
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  onMouseUp={handleMouseUpPassword}
+                  edge="end"
+                  sx={{ mr: 0 }}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
         {error && (
           <Alert severity="error" sx={{ mt: 2, fontSize: '0.875rem' }}>
             {error}
@@ -180,13 +188,17 @@ const Login: React.FC = () => {
         <DialogTitle>Reset Your Password</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            It seems you've entered your password incorrectly multiple times. Would you like to
-            reset your password?
+            It seems you've entered your password incorrectly multiple times.
+            Would you like to reset your password?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setShowResetDialog(false)}>Cancel</Button>
-          <Button onClick={handleResetPassword} variant="contained" color="primary">
+          <Button
+            onClick={handleResetPassword}
+            variant="contained"
+            color="primary"
+          >
             Reset Password
           </Button>
         </DialogActions>

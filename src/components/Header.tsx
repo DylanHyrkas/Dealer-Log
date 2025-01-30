@@ -46,20 +46,24 @@ const Header: React.FC<HeaderProps> = ({ links }) => {
   return (
     <AppBar
       position="static"
-      sx={{
-        backgroundColor: '#088c3a',
-        color: '#000',
-        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
-      }}
+      sx={{ backgroundColor: '#088c3a', color: '#000' }}
     >
-      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <Toolbar
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between', // Keep title and nav buttons on ends
+          alignItems: 'center',
+          gap: 2,
+          position: 'relative', // Add this for absolute positioning context
+        }}
+      >
         {/* Title */}
         <Typography
           variant="h5"
           sx={{
             fontWeight: 'bold',
             color: '#000',
-            textDecoration: 'none',
+            flexShrink: 0,
           }}
         >
           <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -67,114 +71,66 @@ const Header: React.FC<HeaderProps> = ({ links }) => {
           </Link>
         </Typography>
 
-        {/* Search Bar */}
-        {!isMobile && (
-          <Box
+        {/* Centered Search Bar */}
+        <Box
+          sx={{
+            position: 'absolute',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '100%',
+            maxWidth: 400,
+            display: { xs: isMobile ? 'none' : 'flex', sm: 'flex' },
+            justifyContent: 'center',
+          }}
+        >
+          <TextField
+            variant="outlined"
+            size="small"
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+            type="search"
             sx={{
-              flexGrow: 1,
-              mx: 3,
-              display: 'flex',
-              justifyContent: 'center',
+              width: '100%',
+              backgroundColor: '#91d9ac',
+              borderRadius: 1,
             }}
-          >
-            <TextField
-              variant="outlined"
-              size="small"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={handleSearchChange}
-              type="search"
-              sx={{
-                width: '100%',
-                maxWidth: 400,
-                backgroundColor: '#91d9ac',
-                borderRadius: 1,
-              }}
-              slotProps={{
-                input: {
-                  startAdornment:
-                  <InputAdornment position="start">
-                    <SearchIcon
-                      sx={{ cursor: 'pointer', color: '#213547' }}
-                      onClick={handleSearchSubmit}
-                    />
-                  </InputAdornment>
-                },
-              }}
-            />
-          </Box>
-        )}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon
+                    sx={{ cursor: 'pointer', color: '#213547' }}
+                    onClick={handleSearchSubmit}
+                  />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Box>
 
-        {/* Navigation Links */}
-        {isMobile ? (
-          <IconButton
-            edge="end"
-            color="inherit"
-            aria-label="menu"
-            onClick={() => toggleDrawer(true)}
-          >
-            <MenuIcon />
-          </IconButton>
-        ) : (
-          <Box>
-            {links?.map((link) =>
-              link.onClick ? (
-                <Button
-                  key={link.label}
-                  onClick={link.onClick}
-                  sx={{
-                    marginLeft: 1,
-                    color: '#213547',
-                    '&:hover': {
-                      backgroundColor: '#f0f0f0',
-                    },
-                  }}
-                >
-                  {link.label}
-                </Button>
-              ) : (
-                <Button
-                  key={link.path}
-                  component={Link}
-                  to={link.path}
-                  sx={{
-                    marginLeft: 1,
-                    color: '#213547',
-                    '&:hover': {
-                      backgroundColor: '#f0f0f0',
-                    },
-                  }}
-                >
-                  {link.label}
-                </Button>
-              )
-            )}
-          </Box>
-        )}
+        {/* Navigation Links/Menu (keep existing code) */}
+        <Box
+          sx={{
+            flexShrink: 0,
+            display: { xs: 'none', sm: 'block' },
+          }}
+        >
+          {/* Existing navigation buttons */}
+        </Box>
+
+        {/* Mobile Menu Button (keep existing code) */}
+        <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+          {/* Existing mobile menu button */}
+        </Box>
       </Toolbar>
 
-      {/* Drawer for Mobile Navigation */}
-      <Drawer anchor="right" open={drawerOpen} onClose={() => toggleDrawer(false)}>
-        <Box sx={{ width: 250 }} role="presentation">
-          <List>
-            {links?.map((link) =>
-              link.onClick ? (
-                <ListItemButton key={link.label} onClick={link.onClick}>
-                  <ListItemText primary={link.label} />
-                </ListItemButton>
-              ) : (
-                <ListItemButton
-                  key={link.path}
-                  component={Link}
-                  to={link.path}
-                  onClick={() => toggleDrawer(false)} // Close the drawer on navigation
-                >
-                  <ListItemText primary={link.label} />
-                </ListItemButton>
-              )
-            )}
-          </List>
-        </Box>
+      {/* Mobile Drawer (keep existing code) */}
+      <Drawer
+        anchor="right"
+        open={drawerOpen}
+        onClose={() => toggleDrawer(false)}
+      >
+        {/* Existing drawer content */}
       </Drawer>
     </AppBar>
   );
